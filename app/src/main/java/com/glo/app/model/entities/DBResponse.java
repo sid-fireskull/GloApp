@@ -7,7 +7,7 @@ import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
 
-public class DBResponse implements Parcelable {
+public class DBResponse  {
 
     @SerializedName("page")
     @Expose
@@ -21,28 +21,6 @@ public class DBResponse implements Parcelable {
     @SerializedName("results")
     @Expose
     private List<MovieInfo> results = null;
-    public final static Parcelable.Creator<DBResponse> CREATOR = new Creator<DBResponse>() {
-
-
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public DBResponse createFromParcel(Parcel in) {
-            return new DBResponse(in);
-        }
-
-        public DBResponse[] newArray(int size) {
-            return (new DBResponse[size]);
-        }
-
-    };
-
-    protected DBResponse(Parcel in) {
-        this.page = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalResults = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.totalPages = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        in.readList(this.results, (MovieInfo.class.getClassLoader()));
-    }
 
     public DBResponse() {
     }
@@ -79,12 +57,6 @@ public class DBResponse implements Parcelable {
         this.results = results;
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(page);
-        dest.writeValue(totalResults);
-        dest.writeValue(totalPages);
-        dest.writeList(results);
-    }
 
     public int describeContents() {
         return 0;

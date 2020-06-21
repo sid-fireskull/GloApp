@@ -1,5 +1,6 @@
 package com.glo.app.modules.views;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,12 +16,13 @@ import com.glo.app.base.App;
 import com.glo.app.databinding.ActivityMainBinding;
 import com.glo.app.model.entities.MovieInfo;
 import com.glo.app.modules.adapters.MovieDataAdapter;
+import com.glo.app.modules.shared.MovieRecyclerviewClickListener;
 import com.glo.app.viewmodel.MainActivityViewModel;
 import com.glo.app.viewmodel.MainActivityViewModelFactory;
 
 import javax.inject.Inject;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MovieRecyclerviewClickListener {
     private ActivityMainBinding activityMainBinding;
     private RecyclerView recyclerView;
     private MovieDataAdapter movieDataAdapter;
@@ -34,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         activityMainBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        App.getApp().getMovieComponent().inject(this);
+        App.getApp().getMovieComponent().injectMainActivity(this);
         mainActivityViewModel = new ViewModelProvider(this, mainActivityViewModelFactory).get(MainActivityViewModel.class);
         //    mainActivityViewModel = ViewModelProvider.AndroidViewModelFactory.getInstance(getApplication()).create(MainActivityViewModel.class);
 
@@ -60,5 +62,13 @@ public class MainActivity extends AppCompatActivity {
         movieDataAdapter.submitList(moviePageList);
         recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         recyclerView.setAdapter(movieDataAdapter);
+        movieDataAdapter.setClickListener(this);
+    }
+
+    @Override
+    public void onTap(MovieInfo movie) {
+        Intent intent = new Intent(MainActivity.this, MovieDetailActivity.class);
+        intent.putExtra("movie", movie);
+        startActivity(intent);
     }
 }

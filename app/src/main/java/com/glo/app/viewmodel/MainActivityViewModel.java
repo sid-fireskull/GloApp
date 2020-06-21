@@ -1,9 +1,6 @@
 package com.glo.app.viewmodel;
 
-import android.app.Application;
 
-import androidx.annotation.NonNull;
-import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
@@ -11,13 +8,11 @@ import androidx.paging.PagedList;
 
 import com.glo.app.model.entities.MovieInfo;
 import com.glo.app.model.repositories.MovieRepository;
-
 import java.util.List;
 
 
-public class MainActivityViewModel extends ViewModel {
+public class MainActivityViewModel extends ViewModel  {
     private MovieRepository movieRepository;
-
 
     public MainActivityViewModel(MovieRepository movieRepository) {
         this.movieRepository = movieRepository;
@@ -30,4 +25,6 @@ public class MainActivityViewModel extends ViewModel {
     public LiveData<PagedList<MovieInfo>> getMoviesPageList() {
         return movieRepository.getMoviesPageList();
     }
+
+
 }

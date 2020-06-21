@@ -10,6 +10,10 @@ import androidx.databinding.Bindable;
 import androidx.databinding.BindingAdapter;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.DiffUtil;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.Ignore;
+import androidx.room.PrimaryKey;
 
 import com.bumptech.glide.Glide;
 import com.google.gson.annotations.Expose;
@@ -18,87 +22,165 @@ import com.google.gson.annotations.SerializedName;
 import java.util.List;
 import java.util.Objects;
 
+@Entity(tableName = "wishlist")
 public class MovieInfo extends BaseObservable implements Parcelable {
+
+    @Ignore
+    static final String imageBaseUrl = "https://image.tmdb.org/t/p/w500";
 
     @SerializedName("popularity")
     @Expose
+    @Ignore
     private Double popularity;
+
+
+    @ColumnInfo(name = "id")
+    @PrimaryKey
     @SerializedName("id")
     @Expose
     private int id;
+
     @SerializedName("video")
     @Expose
+    @Ignore
     private Boolean video;
+
     @SerializedName("vote_count")
     @Expose
+    @ColumnInfo(name = "vote_count")
     private Integer voteCount;
+
     @SerializedName("vote_average")
     @Expose
+    @ColumnInfo(name = "vote_average")
     private Double voteAverage;
+
     @SerializedName("title")
     @Expose
+    @ColumnInfo(name = "title")
     private String title;
+
+
     @SerializedName("release_date")
     @Expose
+    @ColumnInfo(name = "release_date")
     private String releaseDate;
+
     @SerializedName("original_language")
     @Expose
+    @ColumnInfo(name = "original_language")
     private String originalLanguage;
+
     @SerializedName("original_title")
     @Expose
+    @ColumnInfo(name = "original_title")
     private String originalTitle;
+
     @SerializedName("genre_ids")
     @Expose
+    @Ignore
     private List<Integer> genreIds = null;
+
     @SerializedName("backdrop_path")
     @Expose
+    @Ignore
     private String backdropPath;
+
     @SerializedName("adult")
     @Expose
+    @ColumnInfo(name = "adult")
     private Boolean adult;
+
     @SerializedName("overview")
     @Expose
+    @ColumnInfo(name = "overview")
     private String overview;
+
     @SerializedName("poster_path")
     @Expose
+    @ColumnInfo(name = "poster_path")
     private String posterPath;
-    public final static Parcelable.Creator<DBResponse> CREATOR = new Creator<DBResponse>() {
 
 
-        @SuppressWarnings({
-                "unchecked"
-        })
-        public DBResponse createFromParcel(Parcel in) {
-            return new DBResponse(in);
+    protected MovieInfo(Parcel in) {
+        if (in.readByte() == 0) {
+            popularity = null;
+        } else {
+            popularity = in.readDouble();
+        }
+        id = in.readInt();
+        byte tmpVideo = in.readByte();
+        video = tmpVideo == 0 ? null : tmpVideo == 1;
+        if (in.readByte() == 0) {
+            voteCount = null;
+        } else {
+            voteCount = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            voteAverage = null;
+        } else {
+            voteAverage = in.readDouble();
+        }
+        title = in.readString();
+        releaseDate = in.readString();
+        originalLanguage = in.readString();
+        originalTitle = in.readString();
+        backdropPath = in.readString();
+        byte tmpAdult = in.readByte();
+        adult = tmpAdult == 0 ? null : tmpAdult == 1;
+        overview = in.readString();
+        posterPath = in.readString();
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        if (popularity == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(popularity);
+        }
+        dest.writeInt(id);
+        dest.writeByte((byte) (video == null ? 0 : video ? 1 : 2));
+        if (voteCount == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(voteCount);
+        }
+        if (voteAverage == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeDouble(voteAverage);
+        }
+        dest.writeString(title);
+        dest.writeString(releaseDate);
+        dest.writeString(originalLanguage);
+        dest.writeString(originalTitle);
+        dest.writeString(backdropPath);
+        dest.writeByte((byte) (adult == null ? 0 : adult ? 1 : 2));
+        dest.writeString(overview);
+        dest.writeString(posterPath);
+    }
+
+    public static final Creator<MovieInfo> CREATOR = new Creator<MovieInfo>() {
+        @Override
+        public MovieInfo createFromParcel(Parcel in) {
+            return new MovieInfo(in);
         }
 
-        public DBResponse[] newArray(int size) {
-            return (new DBResponse[size]);
+        @Override
+        public MovieInfo[] newArray(int size) {
+            return new MovieInfo[size];
         }
-
     };
 
     @BindingAdapter({"posterPath"})
     public static void loadImage(ImageView imageView, String imageUrl) {
-        Glide.with(imageView.getContext()).load("https://image.tmdb.org/t/p/w500" + imageUrl).into(imageView);
+        Glide.with(imageView.getContext()).load(imageBaseUrl + imageUrl).into(imageView);
     }
 
-    protected MovieInfo(Parcel in) {
-        this.popularity = ((Double) in.readValue((Double.class.getClassLoader())));
-        this.id = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.video = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
-        this.voteCount = ((Integer) in.readValue((Integer.class.getClassLoader())));
-        this.voteAverage = ((Double) in.readValue((Double.class.getClassLoader())));
-        this.title = ((String) in.readValue((String.class.getClassLoader())));
-        this.releaseDate = ((String) in.readValue((String.class.getClassLoader())));
-        this.originalLanguage = ((String) in.readValue((String.class.getClassLoader())));
-        this.originalTitle = ((String) in.readValue((String.class.getClassLoader())));
-        in.readList(this.genreIds, (java.lang.Integer.class.getClassLoader()));
-        this.backdropPath = ((String) in.readValue((String.class.getClassLoader())));
-        this.adult = ((Boolean) in.readValue((Boolean.class.getClassLoader())));
-        this.overview = ((String) in.readValue((String.class.getClassLoader())));
-        this.posterPath = ((String) in.readValue((String.class.getClassLoader())));
-    }
 
     public MovieInfo() {
     }
@@ -244,22 +326,6 @@ public class MovieInfo extends BaseObservable implements Parcelable {
         notifyPropertyChanged(BR.posterPath);
     }
 
-    public void writeToParcel(Parcel dest, int flags) {
-        dest.writeValue(popularity);
-        dest.writeValue(id);
-        dest.writeValue(video);
-        dest.writeValue(voteCount);
-        dest.writeValue(voteAverage);
-        dest.writeValue(title);
-        dest.writeValue(releaseDate);
-        dest.writeValue(originalLanguage);
-        dest.writeValue(originalTitle);
-        dest.writeList(genreIds);
-        dest.writeValue(backdropPath);
-        dest.writeValue(adult);
-        dest.writeValue(overview);
-        dest.writeValue(posterPath);
-    }
 
     public int describeContents() {
         return 0;

@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:bind="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="movie"
+            type="com.glo.app.model.entities.MovieInfo" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".modules.views.MovieDetailActivity">
+
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/movieDetailsAppBar"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:theme="@style/MyTheme.MyActionBar.TitleTextStyle">
+
+            <com.google.android.material.appbar.CollapsingToolbarLayout
+                android:id="@+id/movieDetailsCollapsingToolbar"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:fitsSystemWindows="true"
+                app:contentScrim="?attr/colorPrimary"
+                app:layout_scrollFlags="scroll|snap|exitUntilCollapsed"
+                app:title="@{movie.title}">
+
+                <ImageView
+                    android:id="@+id/moviePosterIV"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fadingEdgeLength="2dp"
+                    android:scaleType="centerCrop"
+                    bind:posterPath="@{movie.posterPath}" />
+
+
+                <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/mToolbar"
+                    android:layout_width="match_parent"
+                    android:layout_height="?attr/actionBarSize"
+                    android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+                    app:layout_collapseMode="pin" />
+
+            </com.google.android.material.appbar.CollapsingToolbarLayout>
+
+        </com.google.android.material.appbar.AppBarLayout>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/saveWishlistFab"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="32dp"
+            android:src="@drawable/ic_filled_fav"
+            app:layout_anchor="@id/movieDetailsAppBar"
+            app:layout_anchorGravity="bottom|right|end" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/movieVoteCountTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@{@string/generic_vote_count(Integer.toString(movie.voteCount))}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="16sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/movieReleaseDateTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/movieVoteCountTV"
+                    android:layout_marginTop="2dp"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@{@string/generic_release_date(movie.releaseDate)}"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/movieOriginalLanguageTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/movieReleaseDateTV"
+                    android:layout_marginTop="2dp"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@{@string/generic_original_language(movie.originalLanguage)}"
+                    android:textSize="14sp"
+                    android:textStyle="italic" />
+
+                <TextView
+                    android:id="@+id/movieDetailsDescriptionTV"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/movieOriginalLanguageTV"
+                    android:layout_marginTop="20dp"
+                    android:lineSpacingExtra="8sp"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="16dp"
+                    android:text="@{movie.overview}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+        </androidx.core.widget.NestedScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

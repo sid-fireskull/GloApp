@@ -2,11 +2,13 @@ package com.glo.app.model.repositories;
 
 import android.app.Application;
 import android.util.Log;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.glo.app.R;
+import com.glo.app.base.App;
 import com.glo.app.model.entities.DBResponse;
 import com.glo.app.model.entities.MovieInfo;
 import com.glo.app.model.services.BaseApiClient;
@@ -44,6 +46,8 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, MovieInfo> {
 
             @Override
             public void onFailure(Call<DBResponse> call, Throwable t) {
+                if (t.getMessage() != null)
+                    Log.d("Error", t.getMessage());
 
             }
         });

@@ -11,6 +11,8 @@ import androidx.paging.PagedList;
 import com.glo.app.R;
 import com.glo.app.base.App;
 import com.glo.app.di.DaggerMovieComponent;
+import com.glo.app.model.databaseHelper.MovieDB;
+import com.glo.app.model.databaseHelper.MovieDao;
 import com.glo.app.model.entities.DBResponse;
 import com.glo.app.model.entities.MovieInfo;
 import com.glo.app.model.services.BaseApiClient;
@@ -28,6 +30,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MovieRepository {
+    private MovieDao movieDao;
     private LiveData<MovieDataSource> movieDataSourceLiveData;
     private LiveData<PagedList<MovieInfo>> moviesPageList;
     private Application application;
@@ -40,6 +43,8 @@ public class MovieRepository {
     public MovieRepository(Application application) {
         this.application = application;
         App.getApp().getDataServiceComponent().injectDataService(this);
+        MovieDB movieDB = MovieDB.getInstance(application);
+        movieDao = movieDB.getMovieDao();
     }
 
     public MutableLiveData<List<MovieInfo>> getPopularMovies() {
@@ -81,4 +86,33 @@ public class MovieRepository {
         return moviesPageList;
     }
 
+    // Get Movie By Id
+    public LiveData<MovieInfo> getMovieById(int id) {
+        return movieDao.getMovieById(id);
+    }
+
+
+    // Add a new Movie to Wish List
+    public void insertMovieInWishlist(final MovieInfo movie) {
+
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.addMovieInformation(movie);
+            }
+        });
+
+    }
+
+    // Delete A new Movie in the Wish List
+    public void deleteMovieInWishlist(final MovieInfo movie) {
+        Executor myExecutor = Executors.newSingleThreadExecutor();
+        myExecutor.execute(new Runnable() {
+            @Override
+            public void run() {
+                movieDao.deleteMovieInformation(movie);
+            }
+        });
+    }
 }
