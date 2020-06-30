@@ -2,16 +2,13 @@ package com.glo.app.model.repositories;
 
 import android.app.Application;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.paging.PageKeyedDataSource;
 
 import com.glo.app.R;
-import com.glo.app.base.App;
 import com.glo.app.model.entities.DBResponse;
 import com.glo.app.model.entities.MovieInfo;
-import com.glo.app.model.services.BaseApiClient;
 import com.glo.app.model.services.MovieDataService;
 
 import java.util.List;
@@ -31,7 +28,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, MovieInfo> {
 
     @Override
     public void loadInitial(@NonNull LoadInitialParams<Integer> params, @NonNull LoadInitialCallback<Integer, MovieInfo> callback) {
-        movieDataService = BaseApiClient.getRetrofitInstance();
         Call<DBResponse> movieCall = movieDataService.getPopularMoviesByPaging(application.getApplicationContext().getString(R.string.api_key), 1);
         movieCall.enqueue(new Callback<DBResponse>() {
             @Override
@@ -41,7 +37,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, MovieInfo> {
                     List<MovieInfo> movies = dbResponse.getResults();
                     callback.onResult(movies, null, 2);
                 }
-
             }
 
             @Override
@@ -60,7 +55,6 @@ public class MovieDataSource extends PageKeyedDataSource<Integer, MovieInfo> {
 
     @Override
     public void loadAfter(@NonNull LoadParams<Integer> params, @NonNull LoadCallback<Integer, MovieInfo> callback) {
-        movieDataService = BaseApiClient.getRetrofitInstance();
         Call<DBResponse> movieCall = movieDataService.getPopularMoviesByPaging(application.getApplicationContext().getString(R.string.api_key), params.key + 1);
         movieCall.enqueue(new Callback<DBResponse>() {
             @Override

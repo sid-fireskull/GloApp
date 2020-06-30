@@ -1,6 +1,7 @@
 package com.glo.app.model.databaseHelper;
 
 import androidx.lifecycle.LiveData;
+import androidx.paging.DataSource;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
@@ -21,7 +22,7 @@ public interface MovieDao {
     public void deleteMovieInformation(MovieInfo Movie);
 
     @Query("SELECT * FROM wishlist")
-    public LiveData<List<MovieInfo>> getMovieList();
+    public DataSource.Factory<Integer,MovieInfo> getMovieList();
 
     @Query("SELECT * FROM wishlist WHERE id = :id")
     public LiveData<MovieInfo> getMovieById(Integer id);

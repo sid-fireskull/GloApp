@@ -13,6 +13,10 @@ public class App extends Application {
     private AppDataServiceComponent dataServiceComponent;
     private MovieComponent movieComponent;
 
+    public static App getApp() {
+        return app;
+    }
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -23,13 +27,10 @@ public class App extends Application {
         dataServiceComponent = DaggerAppDataServiceComponent.builder().build();
     }
 
-    public static App getApp() {
-        return app;
-    }
-
     public AppDataServiceComponent getDataServiceComponent() {
         return dataServiceComponent;
     }
+
 
     public MovieComponent getMovieComponent() {
         return movieComponent;

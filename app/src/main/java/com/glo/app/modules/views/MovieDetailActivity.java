@@ -6,7 +6,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import android.content.Context;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -16,7 +15,6 @@ import com.glo.app.R;
 import com.glo.app.base.App;
 import com.glo.app.databinding.ActivityMovieDetailBinding;
 import com.glo.app.model.entities.MovieInfo;
-import com.glo.app.viewmodel.MainActivityViewModel;
 import com.glo.app.viewmodel.MovieDetailActivityViewModel;
 import com.glo.app.viewmodel.MovieDetailsActivityViewModelFactory;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;

@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.appcompat.widget.Toolbar
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/myCustomiseToolbar"
-    android:layout_width="match_parent"
-    app:titleTextColor="#ffffff"
-    android:background="@color/colorPrimary"
-    android:layout_height="wrap_content"
-    app:title="@string/popular_movies"/>
+<layout>
+
+    <androidx.appcompat.widget.Toolbar xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/myCustomiseToolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        app:title="@string/popular_movies"
+        android:theme="@style/MyTheme.MyActionBar.TitleTextStyle"
+        app:titleTextColor="#ffffff" />
+
+</layout>

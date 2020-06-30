@@ -47,7 +47,7 @@
                     android:ellipsize="end"
                     android:text="@{movie.title}"
                     android:textStyle="bold"
-                    android:textColor="@color/colorPrimaryDark"
+                    android:textColor="@color/colorBlack"
                     android:textSize="16sp" />
 
                 <TextView
@@ -58,7 +58,7 @@
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:paddingBottom="5dp"
-                    android:text="@{Double.toString(movie.voteAverage)}"
+                    android:text="@{@string/generic_vote_average(Double.toString(movie.voteAverage))}"
                     android:textColor="@color/colorAccent"
                     android:textStyle="bold"
                     android:textSize="12sp" />

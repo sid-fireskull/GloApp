@@ -6,21 +6,21 @@
 
         <variable
             name="movie"
-            type="com.glo.app.modules.views.MainActivity" />
+            type="com.glo.app.modules.views.WishlistActivity" />
     </data>
 
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".modules.views.MainActivity">
+        tools:context=".modules.views.WishlistActivity">
 
         <include
             android:id="@+id/myToolbar"
             layout="@layout/customise_toolbar" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/movieRV"
+            android:id="@+id/wishlistRV"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_below="@id/myToolbar" />

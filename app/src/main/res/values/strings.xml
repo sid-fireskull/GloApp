@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">Glo</string>
     <string name="popular_movies">Popular Movies</string>
-    <string name="api_key">xxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="api_key">xxxxxxxxxxxxxxxxxxxxxxxxxxxx</string>
+    <string name="generic_vote_average">Average Vote: %s</string>
     <string name="generic_vote_count">Total Vote: %s</string>
     <string name="generic_release_date">Release Date: %s</string>
     <string name="generic_original_language">Original Language: %s</string>
